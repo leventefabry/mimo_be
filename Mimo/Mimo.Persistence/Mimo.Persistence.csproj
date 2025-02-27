@@ -10,4 +10,12 @@
       <ProjectReference Include="..\Mimo.Domain\Mimo.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Repositories\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.13" />
+    </ItemGroup>
+
 </Project>
