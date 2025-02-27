@@ -11,5 +11,5 @@ public class Course : BaseEntity
     [MaxLength(1000)]
     public string Description { get; set; }
 
-    public HashSet<Chapter> Chapters { get; } = [];
+    public ICollection<Chapter> Chapters { get; set; } = [];
 }

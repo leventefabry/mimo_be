@@ -1,4 +1,5 @@
 using Mimo.Persistence;
+using Mimo.Persistence.DataSeed;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,5 +26,17 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+if (app.Environment.IsDevelopment())
+{
+    try
+    {
+        DbInitializer.InitDb(app.Services);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e);
+    }
+}
 
 app.Run();

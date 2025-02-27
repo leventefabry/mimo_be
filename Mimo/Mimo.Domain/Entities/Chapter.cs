@@ -18,5 +18,5 @@ public class Chapter : BaseEntity, IOrderable
     
     public Course Course { get; set; } = null!;
     
-    public HashSet<Lesson> Lessons { get; } = [];
+    public ICollection<Lesson> Lessons { get; set; } = [];
 }
