@@ -1,9 +1,13 @@
 ﻿using Mimo.Application.Contracts;
+using Mimo.Application.DTOs;
+using Mimo.Application.Mappers;
 using Mimo.Domain.Contracts;
 
 namespace Mimo.Application.Services;
 
-public class UserLessonProgressService(IRepositoryManager repositoryManager) : IUserLessonProgressService
+public class UserLessonProgressService(
+    IRepositoryManager repositoryManager,
+    IUserAccessor userAccessor) : IUserLessonProgressService
 {
     public async Task TrackUserLessonProgress(Guid userId, Guid lessonId, CancellationToken token = default)
     {
@@ -39,5 +43,12 @@ public class UserLessonProgressService(IRepositoryManager repositoryManager) : I
         
         await repositoryManager.SaveAsync(token);
         return true;
+    }
+    
+    public async Task<IEnumerable<UserLessonProgressDto>> GetUserProgress(CancellationToken token = default)
+    {
+        var userId = userAccessor.GetUserId();
+        var userProgresses = await repositoryManager.Progress.GetFinishedLessonsByUserIdIdAsync(userId!.Value, token);
+        return userProgresses.ToUserLessonProgressDtoList();
     }
 }

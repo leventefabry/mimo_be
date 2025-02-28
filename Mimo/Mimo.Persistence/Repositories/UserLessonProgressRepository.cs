@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Mimo.Domain.Contracts;
+using Mimo.Domain.DTOs;
 using Mimo.Domain.Entities;
 using Mimo.Persistence.Data;
 
@@ -13,6 +14,21 @@ public class UserLessonProgressRepository(MimoDbContext context)
     {
         return await FindByCondition(l => l.LessonId.Equals(lessonId) && l.UserId.Equals(userId), true)
             .SingleOrDefaultAsync(token);
+    }
+    
+    public async Task<IEnumerable<UserLessonProgressQueryDto>> GetFinishedLessonsByUserIdIdAsync(Guid userId,
+        CancellationToken token = default)
+    {
+        return await FindByCondition(l => l.UserId.Equals(userId), false)
+            .Select(l => new UserLessonProgressQueryDto
+            {
+                LessonName = l.Lesson.Name,
+                LessonId = l.LessonId,
+                NumberOfAttempts = l.NumberOfAttempts,
+                DateStarted = l.DateStarted,
+                DateFinished = l.DateFinished,
+            })
+            .ToListAsync(token);
     }
 
     public void CreateUserLessonProgress(Guid userId, Guid lessonId)
