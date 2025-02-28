@@ -13,6 +13,20 @@ public class CourseRepository(MimoDbContext context) : RepositoryBase<Course>(co
             .OrderBy(c => c.Name)
             .ToListAsync(token);
 
+    public async Task<IEnumerable<CourseTreeQueryDto>> GetAllCourseTreesAsync(CancellationToken token = default) =>
+        await FindAll(false)
+            .OrderBy(c => c.Name)
+            .Select(c => new CourseTreeQueryDto
+            {
+                Id = c.Id,
+                Chapters = c.Chapters.Select(ch => new ChapterTreeQueryDto
+                {
+                    Id = ch.Id,
+                    LessonIds = ch.Lessons.Select(l => l.Id).ToHashSet(),
+                }).ToHashSet()
+            })
+            .ToListAsync(token);
+
     public async Task<CourseQueryDto?> GetCourseWithAllDataAsync(Guid courseId, CancellationToken token = default) =>
         await FindByCondition(c => c.Id.Equals(courseId), false)
             .Select(c => new CourseQueryDto
@@ -41,7 +55,8 @@ public class CourseRepository(MimoDbContext context) : RepositoryBase<Course>(co
             })
             .SingleOrDefaultAsync(token);
 
-    public async Task<Course?> GetCourseByIdAsync(Guid courseId, bool trackChanges, CancellationToken token = default) =>
+    public async Task<Course?>
+        GetCourseByIdAsync(Guid courseId, bool trackChanges, CancellationToken token = default) =>
         await FindByCondition(c => c.Id.Equals(courseId), trackChanges)
             .SingleOrDefaultAsync(token);
 

@@ -8,8 +8,8 @@ namespace Mimo.Application.Services;
 public class LessonService(
     IRepositoryManager repositoryManager,
     IUserAccessor userAccessor,
-    IUserLessonProgressService userLessonProgressService
-) : ILessonService
+    IUserLessonProgressService userLessonProgressService,
+    IAchievementService achievementService) : ILessonService
 {
     public async Task<LessonWithCopyDto?> GetLessonByIdAsync(Guid lessonId, CancellationToken token = default)
     {
@@ -36,9 +36,12 @@ public class LessonService(
         // some validation about the lesson has been finished successfully
         var finished = true;
 
-        // TODO: check achievements
-
         var userId = userAccessor.GetUserId();
-        return await userLessonProgressService.FinishUserLessonProgress(userId!.Value, lessonId, finished, token);
+        var result = await userLessonProgressService.FinishUserLessonProgress(userId!.Value, lessonId, finished, token);
+
+        // TODO: validate
+        await achievementService.CheckAchievementsAsync(userId!.Value, token);
+        
+        return result;
     }
 }

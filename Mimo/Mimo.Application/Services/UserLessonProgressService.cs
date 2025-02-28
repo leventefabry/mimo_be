@@ -48,7 +48,7 @@ public class UserLessonProgressService(
     public async Task<IEnumerable<UserLessonProgressDto>> GetUserProgress(CancellationToken token = default)
     {
         var userId = userAccessor.GetUserId();
-        var userProgresses = await repositoryManager.Progress.GetFinishedLessonsByUserIdIdAsync(userId!.Value, token);
+        var userProgresses = await repositoryManager.Progress.GetProgressByUserIdIdAsync(userId!.Value, token);
         return userProgresses.ToUserLessonProgressDtoList();
     }
 }

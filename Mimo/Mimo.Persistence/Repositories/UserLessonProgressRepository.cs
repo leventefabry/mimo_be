@@ -15,8 +15,8 @@ public class UserLessonProgressRepository(MimoDbContext context)
         return await FindByCondition(l => l.LessonId.Equals(lessonId) && l.UserId.Equals(userId), true)
             .SingleOrDefaultAsync(token);
     }
-    
-    public async Task<IEnumerable<UserLessonProgressQueryDto>> GetFinishedLessonsByUserIdIdAsync(Guid userId,
+
+    public async Task<IEnumerable<UserLessonProgressQueryDto>> GetProgressByUserIdIdAsync(Guid userId,
         CancellationToken token = default)
     {
         return await FindByCondition(l => l.UserId.Equals(userId), false)
@@ -28,6 +28,14 @@ public class UserLessonProgressRepository(MimoDbContext context)
                 DateStarted = l.DateStarted,
                 DateFinished = l.DateFinished,
             })
+            .ToListAsync(token);
+    }
+
+    public async Task<IEnumerable<Guid>> GetFinishedLessonGuidsByUserIdIdAsync(Guid userId,
+        CancellationToken token = default)
+    {
+        return await FindByCondition(l => l.UserId.Equals(userId) && l.DateFinished.HasValue, false)
+            .Select(l => l.LessonId)
             .ToListAsync(token);
     }
 

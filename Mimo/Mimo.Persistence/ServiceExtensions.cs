@@ -21,5 +21,7 @@ public static class ServiceExtensions
         services.AddScoped<ICourseRepository, CourseRepository>();
         services.AddScoped<ILessonRepository, LessonRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IAchievementRepository, AchievementRepository>();
+        services.AddScoped<IUserAchievementRepository, UserAchievementRepository>();
     }
 }

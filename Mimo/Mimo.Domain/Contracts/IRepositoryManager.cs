@@ -8,5 +8,9 @@ public interface IRepositoryManager
     
     IUserLessonProgressRepository Progress { get; }
     
+    IAchievementRepository Achievement { get; }
+    
+    IUserAchievementRepository UserAchievement { get; }
+    
     Task SaveAsync(CancellationToken token = default);
 }

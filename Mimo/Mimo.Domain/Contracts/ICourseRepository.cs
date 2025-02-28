@@ -7,6 +7,8 @@ public interface ICourseRepository
 {
     Task<IEnumerable<Course>> GetAllCoursesAsync(bool trackChanges, CancellationToken token = default);
 
+    Task<IEnumerable<CourseTreeQueryDto>> GetAllCourseTreesAsync(CancellationToken token = default);
+
     Task<CourseQueryDto?> GetCourseWithAllDataAsync(Guid courseId, CancellationToken token = default);
 
     Task<Course?> GetCourseByIdAsync(Guid courseId, bool trackChanges, CancellationToken token = default);
