@@ -1,5 +1,5 @@
-﻿using Mimo.Infrastructure.Auth.DTOs;
-using Mimo.Infrastructure.Auth.Responses;
+﻿using Mimo.Application.Contracts.Responses;
+using Mimo.Application.DTOs;
 
 namespace Mimo.Application.Contracts;
 

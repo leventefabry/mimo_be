@@ -1,4 +1,4 @@
-﻿namespace Mimo.Infrastructure.Auth.Responses;
+﻿namespace Mimo.Application.Contracts.Responses;
 
 public  readonly record struct TokenResponseDto
 {

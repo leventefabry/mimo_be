@@ -4,10 +4,10 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Mimo.Application.Contracts;
+using Mimo.Application.Contracts.Responses;
+using Mimo.Application.DTOs;
 using Mimo.Domain.Contracts;
 using Mimo.Domain.Entities;
-using Mimo.Infrastructure.Auth.DTOs;
-using Mimo.Infrastructure.Auth.Responses;
 
 namespace Mimo.Infrastructure.Auth.Services;
 

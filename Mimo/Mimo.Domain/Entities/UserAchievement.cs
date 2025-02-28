@@ -10,5 +10,5 @@ public class UserAchievement
 
     public Achievement Achievement { get; set; } = null!;
 
-    public DateTimeOffset DateCreated { get; set; }
+    public DateTimeOffset DateCreated { get; set; } = DateTimeOffset.Now;
 }

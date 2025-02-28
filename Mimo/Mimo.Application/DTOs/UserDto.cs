@@ -1,4 +1,4 @@
-﻿namespace Mimo.Infrastructure.Auth.DTOs;
+﻿namespace Mimo.Application.DTOs;
 
 public readonly record struct UserDto
 {
