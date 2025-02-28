@@ -9,7 +9,7 @@ public interface ICourseRepository
 
     Task<CourseQueryDto?> GetCourseWithAllDataAsync(Guid courseId, CancellationToken token = default);
 
-    Task<Course?> GetCourseByIdAsync(Guid courseId, bool trackChanges);
+    Task<Course?> GetCourseByIdAsync(Guid courseId, bool trackChanges, CancellationToken token = default);
 
     void CreateCourse(Course course);
 

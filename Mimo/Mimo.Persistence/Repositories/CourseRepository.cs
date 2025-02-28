@@ -41,9 +41,9 @@ public class CourseRepository(MimoDbContext context) : RepositoryBase<Course>(co
             })
             .SingleOrDefaultAsync(token);
 
-    public async Task<Course?> GetCourseByIdAsync(Guid courseId, bool trackChanges) =>
+    public async Task<Course?> GetCourseByIdAsync(Guid courseId, bool trackChanges, CancellationToken token = default) =>
         await FindByCondition(c => c.Id.Equals(courseId), trackChanges)
-            .SingleOrDefaultAsync();
+            .SingleOrDefaultAsync(token);
 
     public void CreateCourse(Course course) => Create(course);
 
