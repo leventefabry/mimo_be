@@ -16,5 +16,7 @@ public class UserLessonProgress
     
     public DateTimeOffset DateStarted { get; set; } = DateTimeOffset.Now;
     
+    public DateTimeOffset? DateUpdated { get; set; }
+    
     public DateTimeOffset? DateFinished { get; set; }
 }

@@ -16,10 +16,12 @@ public class UserLessonProgressService(IRepositoryManager repositoryManager) : I
         }
 
         progress.NumberOfAttempts++;
+        progress.DateUpdated = DateTimeOffset.Now;
         await repositoryManager.SaveAsync(token);
     }
     
-    public async Task<bool> FinishUserLessonProgress(Guid userId, Guid lessonId, CancellationToken token = default)
+    public async Task<bool> FinishUserLessonProgress(Guid userId, Guid lessonId, bool finished,
+        CancellationToken token = default)
     {
         var progress = await repositoryManager.Progress.GetUserLessonProgressByLessonIdAsync(userId, lessonId, token);
         if (progress is null)
@@ -27,7 +29,14 @@ public class UserLessonProgressService(IRepositoryManager repositoryManager) : I
             return false;
         }
 
-        progress.DateFinished = DateTimeOffset.Now;
+        var now = DateTimeOffset.Now;
+        progress.DateUpdated = now;
+
+        if (finished)
+        {
+            progress.DateFinished = now;
+        }
+        
         await repositoryManager.SaveAsync(token);
         return true;
     }

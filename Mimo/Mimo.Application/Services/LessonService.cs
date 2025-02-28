@@ -9,7 +9,7 @@ public class LessonService(
     IRepositoryManager repositoryManager,
     IUserAccessor userAccessor,
     IUserLessonProgressService userLessonProgressService
-    ) : ILessonService
+) : ILessonService
 {
     public async Task<LessonWithCopyDto?> GetLessonByIdAsync(Guid lessonId, CancellationToken token = default)
     {
@@ -18,13 +18,13 @@ public class LessonService(
         {
             return null;
         }
-        
+
         var userId = userAccessor.GetUserId();
         await userLessonProgressService.TrackUserLessonProgress(userId!.Value, lessonId, token);
-        
+
         return lesson.ToLessonWithCopyDto();
     }
-    
+
     public async Task<bool> FinishLessonAsync(Guid lessonId, CancellationToken token = default)
     {
         var lesson = await repositoryManager.Lesson.GetLessonByIdAsync(lessonId, false, token);
@@ -32,12 +32,13 @@ public class LessonService(
         {
             return false;
         }
-        
+
         // some validation about the lesson has been finished successfully
-        
+        var finished = true;
+
         // TODO: check achievements
-        
+
         var userId = userAccessor.GetUserId();
-        return await userLessonProgressService.FinishUserLessonProgress(userId!.Value, lessonId, token);
+        return await userLessonProgressService.FinishUserLessonProgress(userId!.Value, lessonId, finished, token);
     }
 }
