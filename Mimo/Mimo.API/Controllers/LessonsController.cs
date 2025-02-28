@@ -10,7 +10,7 @@ public class LessonsController(ILessonService lessonService) : ControllerBase
 {
     [Authorize]
     [HttpGet("{lessonId}", Name = "GetLesson")]
-    public async Task<ActionResult> GetCourseById(Guid lessonId, CancellationToken token = default)
+    public async Task<ActionResult> GetLessonById(Guid lessonId, CancellationToken token = default)
     {
         var lesson = await lessonService.GetLessonByIdAsync(lessonId, token);
         if (lesson is null)
@@ -19,5 +19,13 @@ public class LessonsController(ILessonService lessonService) : ControllerBase
         }
         
         return Ok(lesson);
+    }
+    
+    [Authorize]
+    [HttpPost("finish/{lessonId}", Name = "FinishLesson")]
+    public async Task<ActionResult> FinishLesson(Guid lessonId, CancellationToken token = default)
+    {
+        var result = await lessonService.FinishLessonAsync(lessonId, token);
+        return result ? NoContent() : BadRequest("Error during finishing the lesson");
     }
 }

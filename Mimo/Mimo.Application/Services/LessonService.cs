@@ -24,4 +24,20 @@ public class LessonService(
         
         return lesson.ToLessonWithCopyDto();
     }
+    
+    public async Task<bool> FinishLessonAsync(Guid lessonId, CancellationToken token = default)
+    {
+        var lesson = await repositoryManager.Lesson.GetLessonByIdAsync(lessonId, false, token);
+        if (lesson is null)
+        {
+            return false;
+        }
+        
+        // some validation about the lesson has been finished successfully
+        
+        // TODO: check achievements
+        
+        var userId = userAccessor.GetUserId();
+        return await userLessonProgressService.FinishUserLessonProgress(userId!.Value, lessonId, token);
+    }
 }
