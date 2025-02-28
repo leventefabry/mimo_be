@@ -1,9 +1,11 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
-using Mimo.Infrastructure.Auth.Contracts;
+using Mimo.Application.Contracts;
 using Mimo.Infrastructure.Auth.Services;
 
 namespace Mimo.Infrastructure;
@@ -29,5 +31,7 @@ public static class ServiceExtensions
             });
 
         services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IUserAccessor, UserAccessor>();
+        services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
     }
 }
