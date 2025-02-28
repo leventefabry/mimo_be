@@ -12,5 +12,7 @@ public interface IRepositoryManager
     
     IUserAchievementRepository UserAchievement { get; }
     
+    IUserRepository User { get; }
+    
     Task SaveAsync(CancellationToken token = default);
 }

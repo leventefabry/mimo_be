@@ -38,10 +38,12 @@ public class LessonService(
 
         var userId = userAccessor.GetUserId();
         var result = await userLessonProgressService.FinishUserLessonProgress(userId!.Value, lessonId, finished, token);
+        if (!result)
+        {
+            return false;
+        }
 
-        // TODO: validate
         await achievementService.CheckAchievementsAsync(userId!.Value, token);
-        
-        return result;
+        return true;
     }
 }

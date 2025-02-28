@@ -17,6 +17,8 @@ public class RepositoryManager(MimoDbContext context) : IRepositoryManager
 
     private readonly Lazy<IUserAchievementRepository> _userAchievementRepository =
         new(() => new UserAchievementRepository(context));
+    
+    private readonly Lazy<IUserRepository> _userRepository = new(() => new UserRepository(context));
 
 
     public ICourseRepository Course => _courseRepository.Value;
@@ -28,6 +30,8 @@ public class RepositoryManager(MimoDbContext context) : IRepositoryManager
     public IAchievementRepository Achievement => _achievementRepository.Value;
 
     public IUserAchievementRepository UserAchievement => _userAchievementRepository.Value;
+    
+    public IUserRepository User => _userRepository.Value;
 
     public async Task SaveAsync(CancellationToken token = default) => await context.SaveChangesAsync(token);
 }
