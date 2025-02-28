@@ -10,7 +10,14 @@ public class CourseService(ICourseRepository courseRepository) : ICourseService
     public async Task<IEnumerable<CourseDto>> GetAllCoursesAsync(CancellationToken token = default)
     {
         var courses = await courseRepository.GetAllCoursesAsync(false, token);
-        var mappedCourses = courses.MapCourses();
+        var mappedCourses = courses.ToCourseDtoList();
         return mappedCourses;
+    }
+
+    public async Task<CourseDto?> GetCourseByIdAsync(Guid courseId, CancellationToken token = default)
+    {
+        var course = await courseRepository.GetCourseWithAllDataAsync(courseId, token);
+        var mappedCourse = course?.ToCourseDto();
+        return mappedCourse;
     }
 }
