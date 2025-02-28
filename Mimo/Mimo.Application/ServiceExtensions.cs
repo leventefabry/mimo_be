@@ -10,5 +10,6 @@ public static class ServiceExtensions
     {
         services.AddScoped<ICourseService, CourseService>();
         services.AddScoped<ILessonService, LessonService>();
+        services.AddScoped<IUserLessonProgressService, UserLessonProgressService>();
     }
 }
