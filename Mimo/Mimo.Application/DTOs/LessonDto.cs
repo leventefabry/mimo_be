@@ -1,6 +1,6 @@
 ﻿namespace Mimo.Application.DTOs;
 
-public  readonly record struct CourseDto
+public readonly record struct LessonDto
 {
     public Guid Id { get; init; }
     
@@ -8,5 +8,5 @@ public  readonly record struct CourseDto
     
     public string Description { get; init; }
 
-    public IEnumerable<ChapterDto> Chapters { get; init; }
+    public int Order { get; init; }
 }
