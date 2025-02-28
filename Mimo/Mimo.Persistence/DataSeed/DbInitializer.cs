@@ -489,6 +489,7 @@ public static class DbInitializer
                 Name = "Complete the Swift course",
                 AchievementType = AchievementType.CourseCompletion,
                 CourseId = new Guid("3659ac24-29dd-407a-81f5-ecfe6f924b9b"),
+                Count = 1,
             },
             new()
             {
@@ -496,6 +497,7 @@ public static class DbInitializer
                 Name = "Complete the Javascript course",
                 AchievementType = AchievementType.CourseCompletion,
                 CourseId = new Guid("6a5011a1-fe1f-47df-9a32-b5346b289391"),
+                Count = 1,
             },
             new()
             {
@@ -503,6 +505,7 @@ public static class DbInitializer
                 Name = "Complete the C# course",
                 AchievementType = AchievementType.CourseCompletion,
                 CourseId = new Guid("47111973-d176-4feb-848d-0ea22641c31a"),
+                Count = 1,
             }
         };
         

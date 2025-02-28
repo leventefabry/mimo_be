@@ -10,12 +10,12 @@ public class Achievement : BaseEntity
     
     public AchievementType AchievementType { get; set; }
 
-    public int? Count { get; set; }
+    public int Count { get; set; }
     
     public Guid? CourseId { get; set; }
     
     public Course? Course { get; set; }
 
-    public ICollection<UserAchievement> UserAchievement { get; set; } = [];
+    public ICollection<UserAchievement> UserAchievements { get; set; } = [];
     public ICollection<User> Users { get; set; } = [];
 }
