@@ -1,3 +1,4 @@
+using Mimo.Application;
 using Mimo.Persistence;
 using Mimo.Persistence.DataSeed;
 
@@ -11,6 +12,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.ConfigureDatabase(builder.Configuration);
+builder.Services.AddRepositories();
+builder.Services.AddServices();
 
 var app = builder.Build();
 

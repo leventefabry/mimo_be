@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Mimo.Domain.Contracts;
 using Mimo.Persistence.Data;
+using Mimo.Persistence.Repositories;
 
 namespace Mimo.Persistence;
 
@@ -11,5 +13,10 @@ public static class ServiceExtensions
     {
         services.AddDbContext<MimoDbContext>(options =>
             options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
+    }
+    
+    public static void AddRepositories(this IServiceCollection services)
+    {
+        services.AddScoped<ICourseRepository, CourseRepository>();
     }
 }
