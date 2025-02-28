@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Mimo.Domain.Common;
 using Mimo.Domain.Entities;
 using Mimo.Persistence.Data;
 
@@ -21,6 +22,7 @@ public static class DbInitializer
         
         SeedCourseData(context);
         SeedUserData(context);
+        SeedAchievementData(context);
     }
 
     private static void SeedCourseData(MimoDbContext context)
@@ -433,6 +435,78 @@ public static class DbInitializer
         };
         
         context.AddRange(users);
+        context.SaveChanges();
+    }
+    
+    private static void SeedAchievementData(MimoDbContext context)
+    {
+        if (context.Achievements.Any())
+        {
+            Console.WriteLine("Already have data - no need to seed");
+            return;
+        }
+
+        var achievements = new List<Achievement>
+        {
+            new()
+            {
+                Id = new Guid("61cad9ac-c2cb-451c-be58-27752d386596"),
+                Name = "Complete 5 lessons",
+                AchievementType = AchievementType.LessonCount,
+                Count = 5,
+            },
+            new()
+            {
+                Id = new Guid("2d7dc9ca-35f4-460a-a03d-787f13ea2f0f"),
+                Name = "Complete 25 lessons",
+                AchievementType = AchievementType.LessonCount,
+                Count = 25,
+            },
+            new()
+            {
+                Id = new Guid("333bc7ef-37c0-41bb-b984-a8a7d50934db"),
+                Name = "Complete 50 lessons",
+                AchievementType = AchievementType.LessonCount,
+                Count = 50,
+            },
+            new()
+            {
+                Id = new Guid("cd38173b-b6dd-4c94-b141-96f62f82b8a1"),
+                Name = "Complete 1 chapter",
+                AchievementType = AchievementType.ChapterCount,
+                Count = 1,
+            },
+            new()
+            {
+                Id = new Guid("d6fe35d0-874a-4e0f-9010-f868c62d52fe"),
+                Name = "Complete 5 chapters",
+                AchievementType = AchievementType.ChapterCount,
+                Count = 5,
+            },
+            new()
+            {
+                Id = new Guid("e0fb84b4-7d87-4609-a8f7-b0b8dbb09ec4"),
+                Name = "Complete the Swift course",
+                AchievementType = AchievementType.CourseCompletion,
+                CourseId = new Guid("3659ac24-29dd-407a-81f5-ecfe6f924b9b"),
+            },
+            new()
+            {
+                Id = new Guid("8c489a6d-3741-433e-8469-0df0a63c6369"),
+                Name = "Complete the Javascript course",
+                AchievementType = AchievementType.CourseCompletion,
+                CourseId = new Guid("6a5011a1-fe1f-47df-9a32-b5346b289391"),
+            },
+            new()
+            {
+                Id = new Guid("d26c3765-779e-492c-8cac-49c8018d8750"),
+                Name = "Complete the C# course",
+                AchievementType = AchievementType.CourseCompletion,
+                CourseId = new Guid("47111973-d176-4feb-848d-0ea22641c31a"),
+            }
+        };
+        
+        context.AddRange(achievements);
         context.SaveChanges();
     }
 }

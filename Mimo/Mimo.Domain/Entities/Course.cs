@@ -11,5 +11,7 @@ public class Course : BaseEntity
     [MaxLength(1000)]
     public string Description { get; set; } = string.Empty;
 
+    public Achievement? Achievement { get; set; }
+    
     public ICollection<Chapter> Chapters { get; set; } = [];
 }

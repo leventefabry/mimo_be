@@ -19,4 +19,7 @@ public class Lesson : BaseEntity, IOrderable
     public Guid ChapterId { get; set; }
     
     public Chapter Chapter { get; set; } = null!;
+    
+    public ICollection<UserLessonProgress> LessonProgresses { get; set; } = [];
+    public ICollection<User> Users { get; set; } = [];
 }
