@@ -10,18 +10,21 @@ public static class DbInitializer
     public static void InitDb(IServiceProvider serviceProvider)
     {
         using var scope = serviceProvider.CreateScope();
-        SeedData(scope.ServiceProvider.GetService<MimoDbContext>());
-    }
 
-    private static void SeedData(MimoDbContext? context)
-    {
+        var context = scope.ServiceProvider.GetService<MimoDbContext>();
         if (context is null)
         {
             return;
         }
 
         context.Database.Migrate();
+        
+        SeedCourseData(context);
+        SeedUserData(context);
+    }
 
+    private static void SeedCourseData(MimoDbContext context)
+    {
         if (context.Courses.Any())
         {
             Console.WriteLine("Already have data - no need to seed");
@@ -400,7 +403,36 @@ public static class DbInitializer
                 ]
             },
         };
+        
         context.AddRange(courses);
+        context.SaveChanges();
+    }
+
+    private static void SeedUserData(MimoDbContext context)
+    {
+        if (context.Users.Any())
+        {
+            Console.WriteLine("Already have data - no need to seed");
+            return;
+        }
+
+        var users = new List<User>
+        {
+            new()
+            {
+                Id = new Guid("dd4dba61-429c-4bbd-8db3-06fa3552223f"),
+                Username = "john_doe",
+                PasswordHash = "password"
+            },
+            new()
+            {
+                Id = new Guid("cf5f4020-430a-4cc9-a263-915453aca15f"),
+                Username = "jane_doe",
+                PasswordHash = "password"
+            },
+        };
+        
+        context.AddRange(users);
         context.SaveChanges();
     }
 }

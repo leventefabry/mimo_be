@@ -1,4 +1,6 @@
+using Mimo.API;
 using Mimo.Application;
+using Mimo.Infrastructure;
 using Mimo.Persistence;
 using Mimo.Persistence.DataSeed;
 
@@ -9,11 +11,12 @@ builder.Services.AddControllers();
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
-builder.Services.ConfigureDatabase(builder.Configuration);
-builder.Services.AddRepositories();
 builder.Services.AddServices();
+builder.Services.AddRepositories();
+builder.Services.AddSwaggerConfig();
+builder.Services.AddAuthServices(builder.Configuration);
+builder.Services.ConfigureDatabase(builder.Configuration);
 
 var app = builder.Build();
 

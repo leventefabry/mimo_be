@@ -17,6 +17,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Mimo.Application\Mimo.Application.csproj" />
+      <ProjectReference Include="..\Mimo.Infrastructure\Mimo.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

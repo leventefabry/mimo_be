@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Mimo.Application.Contracts;
 
 namespace Mimo.API.Controllers;
@@ -7,6 +8,7 @@ namespace Mimo.API.Controllers;
 [Route("api/[controller]")]
 public class LessonsController(ILessonService lessonService) : ControllerBase
 {
+    [Authorize]
     [HttpGet("{lessonId}", Name = "GetLesson")]
     public async Task<ActionResult> GetCourseById(Guid lessonId, CancellationToken token = default)
     {
