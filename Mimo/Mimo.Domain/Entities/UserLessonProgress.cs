@@ -12,7 +12,7 @@ public class UserLessonProgress
 
     public Lesson Lesson { get; set; } = null!;
 
-    public int NumberOfAttempts { get; set; } = 0;
+    public int NumberOfAttempts { get; set; }
     
     public DateTimeOffset DateStarted { get; set; } = DateTimeOffset.Now;
     

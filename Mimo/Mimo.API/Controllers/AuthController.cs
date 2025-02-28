@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Mimo.Infrastructure.Auth.Contracts;
+using Mimo.Application.Contracts;
 using Mimo.Infrastructure.Auth.DTOs;
 using Mimo.Infrastructure.Auth.Responses;
 

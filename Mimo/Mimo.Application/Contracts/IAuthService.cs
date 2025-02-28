@@ -1,7 +1,7 @@
 ﻿using Mimo.Infrastructure.Auth.DTOs;
 using Mimo.Infrastructure.Auth.Responses;
 
-namespace Mimo.Infrastructure.Auth.Contracts;
+namespace Mimo.Application.Contracts;
 
 public interface IAuthService
 {

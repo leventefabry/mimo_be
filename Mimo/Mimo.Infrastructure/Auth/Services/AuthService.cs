@@ -3,9 +3,9 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Mimo.Application.Contracts;
 using Mimo.Domain.Contracts;
 using Mimo.Domain.Entities;
-using Mimo.Infrastructure.Auth.Contracts;
 using Mimo.Infrastructure.Auth.DTOs;
 using Mimo.Infrastructure.Auth.Responses;
 
