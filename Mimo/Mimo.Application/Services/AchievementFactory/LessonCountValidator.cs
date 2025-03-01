@@ -9,8 +9,16 @@ public class LessonCountValidator : BaseAchievementValidator, IAchievementValida
 {
     public AchievementType GetAchievementType => AchievementType.LessonCount;
 
-    public bool Valid(Achievement achievement, IEnumerable<CourseTreeDto> courseTrees, IEnumerable<Guid> userLessons)
+    public AchievementCheck Check(Achievement achievement, IEnumerable<CourseTreeDto> courseTrees, IEnumerable<Guid> userLessons)
     {
-        return userLessons.ToList().Count >= achievement.Count;
+        var currentProgress = userLessons.ToList().Count;
+        var achieved = currentProgress >= achievement.Count;
+        
+        return new AchievementCheck
+        {
+            Achieved = achieved,
+            Threshold = achievement.Count,
+            Progress = currentProgress
+        };
     }
 }

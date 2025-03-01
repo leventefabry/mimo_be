@@ -9,10 +9,18 @@ public class ChapterCountValidator : BaseAchievementValidator, IAchievementValid
 {
     public AchievementType GetAchievementType => AchievementType.ChapterCount;
 
-    public bool Valid(Achievement achievement, IEnumerable<CourseTreeDto> courseTrees, IEnumerable<Guid> userLessons)
+    public AchievementCheck Check(Achievement achievement, IEnumerable<CourseTreeDto> courseTrees,
+        IEnumerable<Guid> userLessons)
     {
         var chapters = courseTrees.SelectMany(c => c.Chapters);
-        var finishedChapters = GetFinishedChapters(userLessons, chapters);
-        return finishedChapters >= achievement.Count;
+        var finishedChapters = GetNumberOfFinishedChapters(userLessons, chapters);
+        var achieved = finishedChapters >= achievement.Count;
+
+        return new AchievementCheck
+        {
+            Achieved = achieved,
+            Threshold = achievement.Count,
+            Progress = finishedChapters
+        };
     }
 }

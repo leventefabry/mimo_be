@@ -7,6 +7,7 @@ namespace Mimo.Application.Contracts.AchievementValidators;
 public interface IAchievementValidator
 {
     AchievementType GetAchievementType { get; }
-    
-    bool Valid(Achievement achievement, IEnumerable<CourseTreeDto> courseTrees, IEnumerable<Guid> userLessons);
+
+    AchievementCheck Check(Achievement achievement, IEnumerable<CourseTreeDto> courseTrees,
+        IEnumerable<Guid> userLessons);
 }

@@ -6,6 +6,6 @@ public interface IAchievementRepository
 {
     Task<IEnumerable<Achievement>> GetAllAchievementsAsync(bool trackChanges, CancellationToken token = default);
 
-    Task<IEnumerable<Achievement>> GetAchievementsExceptAsync(IEnumerable<Guid> except,
+    Task<IEnumerable<Achievement>> GetNotFinishedAchievementsAsync(IEnumerable<Guid> except,
         CancellationToken token = default);
 }

@@ -19,7 +19,7 @@ public class UserRepository(MimoDbContext context) : RepositoryBase<User>(contex
         return await FindByCondition(u => u.Id.Equals(id), false)
             .Select(u => new UserProgressAndAchievementsQueryDto
             {
-                LessonIds = u.Lessons.Select(l => l.Id),
+                LessonIds = u.LessonProgresses.Where(l => l.DateFinished.HasValue).Select(l => l.LessonId),
                 AchievementsIds = u.Achievements.Select(a => a.Id)
             }).SingleOrDefaultAsync(token);
     }

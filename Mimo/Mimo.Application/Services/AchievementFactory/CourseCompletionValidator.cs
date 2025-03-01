@@ -2,6 +2,7 @@
 using Mimo.Application.DTOs;
 using Mimo.Domain.Common;
 using Mimo.Domain.Entities;
+using Mimo.Domain.Exceptions;
 
 namespace Mimo.Application.Services.AchievementFactory;
 
@@ -9,17 +10,28 @@ public class CourseCompletionValidator : BaseAchievementValidator, IAchievementV
 {
     public AchievementType GetAchievementType => AchievementType.CourseCompletion;
 
-    public bool Valid(Achievement achievement, IEnumerable<CourseTreeDto> courseTrees, IEnumerable<Guid> userLessons)
+    public AchievementCheck Check(Achievement achievement, IEnumerable<CourseTreeDto> courseTrees,
+        IEnumerable<Guid> userLessons)
     {
         CourseTreeDto? course = courseTrees.FirstOrDefault(c => c.Id.Equals(achievement.CourseId));
         if (course is null)
         {
-            return false;
+            throw new CourseNotFoundException("Course was not found");
         }
 
         var chaptersCount = course.Value.Chapters.Count;
-        var finishedChapters = GetFinishedChapters(userLessons, course.Value.Chapters);
+        var lessonsCount = course.Value.Chapters.SelectMany(ch => ch.LessonIds).Count();
+        var userLessonsList = userLessons.ToList();
+        var finishedChapters = GetNumberOfFinishedChapters(userLessonsList, course.Value.Chapters);
+        var numberOfFinishedLessons = GetNumberOfFinishedLessons(userLessonsList, course.Value.Chapters);
         
-        return chaptersCount == finishedChapters;
+        var achieved = chaptersCount == finishedChapters;
+
+        return new AchievementCheck
+        {
+            Achieved = achieved,
+            Threshold = lessonsCount,
+            Progress = numberOfFinishedLessons
+        };
     }
 }

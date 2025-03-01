@@ -12,9 +12,9 @@ public class AchievementRepository(MimoDbContext context) : RepositoryBase<Achie
         await FindAll(trackChanges)
             .OrderBy(c => c.Name)
             .ToListAsync(token);
-    
-    public async Task<IEnumerable<Achievement>> GetAchievementsExceptAsync(IEnumerable<Guid> except,
+
+    public async Task<IEnumerable<Achievement>> GetNotFinishedAchievementsAsync(IEnumerable<Guid> except,
         CancellationToken token = default) =>
-        await FindByCondition(a => !except.Contains(a.Id),false)
+        await FindByCondition(a => !except.Contains(a.Id), false)
             .ToListAsync(token);
 }
