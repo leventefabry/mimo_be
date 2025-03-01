@@ -9,7 +9,28 @@ namespace Mimo.API.Controllers;
 [Route("api/[controller]")]
 public class AuthController(IAuthService authService) : ControllerBase
 {
+    /// <summary>
+    /// Login endpoint
+    /// </summary>
+    /// <remarks>
+    /// Sample request:
+    /// 
+    ///     POST api/Auth
+    ///     {        
+    ///       "username": "john_doe",
+    ///       "password": "password"
+    ///     }
+    ///     OR
+    ///     {        
+    ///       "username": "jane_doe",
+    ///       "password": "password"
+    ///     }
+    /// </remarks>
+    /// <param name="request">Contains username and password</param>
+    /// <returns>The bearer token</returns> 
     [HttpPost("login")]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(400)]
     public async Task<ActionResult<TokenResponseDto>> Login(UserDto request)
     {
         var result = await authService.LoginAsync(request);
