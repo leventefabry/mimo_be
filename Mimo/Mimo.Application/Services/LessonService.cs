@@ -1,6 +1,7 @@
 ﻿using Mimo.Application.Contracts;
 using Mimo.Application.DTOs;
 using Mimo.Application.Mappers;
+using Mimo.Domain.Common;
 using Mimo.Domain.Contracts;
 
 namespace Mimo.Application.Services;
@@ -25,12 +26,13 @@ public class LessonService(
         return lesson.ToLessonWithCopyDto();
     }
 
-    public async Task<bool> FinishLessonAsync(Guid lessonId, CancellationToken token = default)
+    public async Task<Result<IEnumerable<NewAchievementDto>>> FinishLessonAsync(Guid lessonId,
+        CancellationToken token = default)
     {
         var lesson = await repositoryManager.Lesson.GetLessonByIdAsync(lessonId, false, token);
         if (lesson is null)
         {
-            return false;
+            return Result<IEnumerable<NewAchievementDto>>.Failure("The lesson was not found")!;
         }
 
         // some validation about the lesson has been finished successfully
@@ -40,10 +42,10 @@ public class LessonService(
         var result = await userLessonProgressService.FinishUserLessonProgress(userId!.Value, lessonId, finished, token);
         if (!result)
         {
-            return false;
+            return Result<IEnumerable<NewAchievementDto>>.Failure("Error while finishing the lesson")!;
         }
 
-        await achievementService.CheckAchievementsAsync(userId!.Value, token);
-        return true;
+        var newAchievements = await achievementService.CheckAchievementsAsync(userId!.Value, token);
+        return Result<IEnumerable<NewAchievementDto>>.Success(newAchievements);
     }
 }

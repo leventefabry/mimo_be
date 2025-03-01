@@ -17,15 +17,17 @@ public class LessonsController(ILessonService lessonService) : ControllerBase
         {
             return NotFound();
         }
-        
+
         return Ok(lesson);
     }
-    
+
     [Authorize]
     [HttpPost("finish/{lessonId}", Name = "FinishLesson")]
     public async Task<ActionResult> FinishLesson(Guid lessonId, CancellationToken token = default)
     {
         var result = await lessonService.FinishLessonAsync(lessonId, token);
-        return result ? NoContent() : BadRequest("Error during finishing the lesson");
+        return result.IsSuccess
+            ? result.Value.Any() ? Ok(result.Value) : NoContent()
+            : BadRequest("Error during finishing the lesson");
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace Mimo.Application.Contracts;
+﻿using Mimo.Application.DTOs;
+
+namespace Mimo.Application.Contracts;
 
 public interface IAchievementService
 {
-    Task CheckAchievementsAsync(Guid userId, CancellationToken token = default);
+    Task<IEnumerable<NewAchievementDto>> CheckAchievementsAsync(Guid userId, CancellationToken token = default);
 }
